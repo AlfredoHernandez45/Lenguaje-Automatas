@@ -189,11 +189,24 @@ public class analizador {
                         
                     }else{
                         
-                        if(arreglo.isEmpty()){
-                            System.out.println("ERROR SINTACTICO: hay un operador al inicio de la expresion");
-                            bandera = false;
-                            break;
-                        } else pila.push(lista.get(i));
+                        if(arreglo.isEmpty() && pila.peek() == '('){
+                            pila.push(lista.get(i));
+                            System.out.println(pila);
+                            //System.out.println("ERROR SINTACTICO: hay un operador al inicio de la expresion");
+                            //bandera = false;
+                            //break;
+                        } else{
+                            if(arreglo.isEmpty()){
+                                if(lista.get(i) == '('){
+                                    pila.push(lista.get(i)); 
+                                    System.out.println(pila);
+                                }
+                                System.out.println("ERROR SINTACTICO: hay un operador al inicio de la expresion");
+                                bandera = false;
+                                break;
+                            }else  {pila.push(lista.get(i)); 
+                                System.out.println(pila);}
+                        } //pila.push(lista.get(i));
                         
                         
                     }
@@ -275,9 +288,8 @@ public class analizador {
         }
         if(bandera == true){
             System.out.println("\nRecorrido postorden del árbol");
-            n.Tree(pilaArbol.peek());
-
-            //ASe(posfijo);
+            //n.Tree(pilaArbol.peek());
+            ASe(posfijo);
         }
 
     }
@@ -286,7 +298,62 @@ public class analizador {
      * Analisis Semantico
      * se realiza el arbol
      */
-    public static void ASe(){
+    public static void ASe(ArrayList<Integer> posfijo){
+        try{
+            Stack<Integer> pilaSe = new Stack<Integer>();
+            
+            
+            for(int i=0; i<posfijo.size(); i++){
+                if(posfijo.get(i) >= 0 && posfijo.get(i) <= 9){
+                    pilaSe.push(posfijo.get(i));
+                    //System.out.println("\nTe entro" + posfijo.get(i));
 
+                }
+                if(posfijo.get(i) < 0){
+                    
+                    int operacion = posfijo.get(i);
+                    int resultadoTemp = 0;
+                    int num1 = 0;
+                    int num2 = 0;
+                    switch(operacion){
+                        //en caso de una suma (+)
+                        case -5:
+                            num1=pilaSe.pop();
+                            num2=pilaSe.pop();
+                            resultadoTemp = num2 + num1;
+                            pilaSe.push(resultadoTemp);
+                            //System.out.println(pilaSe);
+                        break;
+                        //en caso de una suma (-)
+                        case -3:
+                            num1=pilaSe.pop();
+                            num2=pilaSe.pop();
+                            resultadoTemp = num1 - num2;
+                            pilaSe.push(resultadoTemp);
+                        break;
+                        //en caso de una suma (*)
+                        case -6:
+                            num1=pilaSe.pop();
+                            num2=pilaSe.pop();
+                            resultadoTemp = num2 * num1;
+                            pilaSe.push(resultadoTemp);
+                        break;
+                        //en caso de una suma (/)
+                        case -1:
+                            num1=pilaSe.pop();
+                            num2=pilaSe.pop();
+                            resultadoTemp = num2 / num1;
+                            pilaSe.push(resultadoTemp);
+                        break;
+                        
+                    }
+                }
+            }
+            System.out.println("Recorrido Semantico finalizado");
+            
+
+        }catch(Exception e){
+            System.out.println ("\nERROR SEMANTICO: en la creacion del árbol");
+        }
     }
 }
