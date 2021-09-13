@@ -1,8 +1,5 @@
 import java.util.*;
 
-import jdk.internal.net.http.common.FlowTube.TubePublisher;
-
-//import jdk.internal.org.jline.reader.impl.DefaultParser.Bracket;
 public class analizador {
     
     public static void main (String [] args){
@@ -77,12 +74,8 @@ public class analizador {
                 arreglo.add(lista.get(i));
             }else{
                 try{
-                    /** 
-                    if(lista.get(i) == '('){
-                        pila.push(lista.get(i));
-                        System.out.println(pila);
-                        //break;
-                    }*/
+                     
+                    
                         
                     if(!pila.empty()){
                         char signo = lista.get(i);
@@ -188,30 +181,52 @@ public class analizador {
                         
                         
                     }else{
-                        
-                        if(arreglo.isEmpty() && pila.peek() == '('){
+                        pila.push(lista.get(i));
+                        System.out.println(pila);
+                        /** 
+                        if(pila.isEmpty() && lista.get(i) == '('){
                             pila.push(lista.get(i));
                             System.out.println(pila);
                             //System.out.println("ERROR SINTACTICO: hay un operador al inicio de la expresion");
                             //bandera = false;
                             //break;
-                        } else{
-                            if(arreglo.isEmpty()){
-                                if(lista.get(i) == '('){
-                                    pila.push(lista.get(i)); 
-                                    System.out.println(pila);
-                                }
-                                System.out.println("ERROR SINTACTICO: hay un operador al inicio de la expresion");
-                                bandera = false;
-                                break;
-                            }else  {pila.push(lista.get(i)); 
-                                System.out.println(pila);}
-                        } //pila.push(lista.get(i));
-                        
-                        
+                        } 
+                        if(arreglo.isEmpty() && pila.get(0)!='('){
+                            System.out.println("ERROR SINTACTICO: hay un operador al inicio de la expresion");
+                            bandera = false;
+                            System.exit(0);
+                        }*/
                     }
+                    //else{
+                        /** 
+                        if(pila.isEmpty() && lista.get(i) == '('){
+                            pila.push(lista.get(i));
+                            System.out.println(pila);
+                            //System.out.println("ERROR SINTACTICO: hay un operador al inicio de la expresion");
+                            //bandera = false;
+                            //break;
+                        } 
+                        if(lista.get(0) == '('){
+                            pila.push(lista.get(i));
+                            System.out.println(pila);
+                            //break;
+                        }
+                    if(pila.isEmpty() && pila.peek() != '('){
+                        System.out.println("ERROR SINTACTICO: hay un operador al inicio de la expresion");
+                        bandera = false;
+                        break;
+                    }else  {
+                        pila.push(lista.get(i)); 
+                        System.out.println(pila);
+                    }*/
+                    //pila.push(lista.get(i));
+                        
+                        
+                    //}
                 }catch(Exception e){
-                    //System.out.println("ERROR SINTACTICO: hay un operador al inicio");
+                    System.out.println("ERROR SINTACTICO: hay un operador al inicio");
+                    bandera = false;
+                    break;
                 }
             }
             int lim = lista.size()-1;
@@ -242,7 +257,7 @@ public class analizador {
      */
     public static void ArbolSi(ArrayList<Character> arreglo){
         ArrayList<Integer> posfijo = new ArrayList<Integer>();
-        Nodos n = new Nodos();
+        //Nodos n = new Nodos();
         //ArrayList<ArrayList<Integer>> pp = new ArrayList<ArrayList<Integer>>();
         Stack<Nodos> pilaArbol = new Stack<Nodos>();
         //Objects nomber [] = {0,1,2,3,4,5,6,7,8,9};
